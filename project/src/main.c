@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "utils.h"
 #include "prime.h"
+#include "reverse.h"
 
 #define ERR_ARGS_COUNT (-1)
 #define ERR_WRONG_FLG (-2)
@@ -10,6 +11,7 @@
 #define TST_FOO_FIX     1
 #define TST_FOO_IMPL    2
 #define TST_MOD_IMPL    3
+#define TST_REVERSE_IMPL    4
 
 
 /* NOTE(stitaevskiy):
@@ -65,6 +67,12 @@ int main(int argc, const char** argv) {
             // TODO(print): Print to stdout `1` if `num` is prime number and `0` otherwise
             // This function MUST be implemented in
             // a separate C-module (not in `main` or `utils` module)
+        }
+        case TST_REVERSE_IMPL: {
+            int number = atoi(data);
+            reverse(number);
+
+            break;
         }
         default: {
             return ERR_WRONG_FLG;
