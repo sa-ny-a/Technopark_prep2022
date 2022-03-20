@@ -2,6 +2,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include "utils.h"
+#include "prime.h"
 
 size_t timer_from(int from) {
     size_t counter = 0;
@@ -9,8 +10,8 @@ size_t timer_from(int from) {
         ++counter;
         if (i == 0) {
             printf("%d\n", i); }
-        else {
-            printf("%d ", i); }
+        else
+            printf("%d ", i);
     }
     return counter;
 }
@@ -23,8 +24,7 @@ int custom_pow(int base, int power) {
 
     int num = base;
     for (int i = 1; i < power; ++i) {
-        num *= base; 
+        num *= base;
     }
     return num;
 }
-
