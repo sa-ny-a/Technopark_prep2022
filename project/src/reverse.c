@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <math.h>
 #include "reverse.h"
 
 void reverse(int number) {
