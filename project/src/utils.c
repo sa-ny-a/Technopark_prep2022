@@ -1,10 +1,11 @@
-#include <stdio.h>
 #include <stddef.h>
+#include <stdio.h>
 #include <stdlib.h>
-#include "utils.h"
-#include "prime.h"
 
-size_t timer_from(int from) {
+#include "prime.h"
+#include "utils.h"
+
+size_t timer_from(const int from) {
     size_t counter = 0;
     for (int i = from; i >= 0; --i) {
         ++counter;
@@ -16,9 +17,7 @@ size_t timer_from(int from) {
     return counter;
 }
 
-// TODO(power): Implement `power of` function
-
-int custom_pow(int base, int power) {
+int custom_pow(const int base, const int power) {
     if (power == 0)
         return 1;
 

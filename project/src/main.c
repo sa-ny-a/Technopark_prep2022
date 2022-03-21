@@ -1,55 +1,41 @@
-#include <stdio.h>
 #include <stddef.h>
+#include <stdio.h>
 #include <stdlib.h>
-#include "utils.h"
+
 #include "prime.h"
 #include "reverse.h"
+#include "utils.h"
 
 #define ERR_ARGS_COUNT (-1)
 #define ERR_WRONG_FLG (-2)
 
-#define TST_FOO_FIX     1
-#define TST_FOO_IMPL    2
-#define TST_MOD_IMPL    3
+#define TST_FOO_FIX         1
+#define TST_FOO_IMPL        2
+#define TST_MOD_IMPL        3
 #define TST_REVERSE_IMPL    4
-
-
-/* NOTE(stitaevskiy):
- * We use `atoi` function just for simplification and code reducing.
- * This function doesn't report conversation errors.
- * For safety program we recommend using `strtol` and its analogs.
- * (See `man atoi` and `man strtol` for more info).
- *
- * const char str_num[] = "1234";
- * char* end = NULL;
- * int val = (int) strtol(str_num, &end, 0);
- * if (end != '\0') {
- *     //  ERROR
- * }
- *
- * */
 
 int main(int argc, const char** argv) {
     if (argc < 3) {
         return ERR_ARGS_COUNT;
     }
 
-    int Test_case = atoi(argv[1]);
+    char* end = NULL;
+    int test_case = strtol(argv[1], &end, 0);
     const char* data;
     data = argv[2];
 
-    switch (Test_case) {
+    switch (test_case) {
         case TST_FOO_FIX: {
-            int to = atoi(data);
+            int to = strtol(data, &end, 0);
             size_t ticks_count = timer_from(to);
             printf("%zu", ticks_count);
             break;
         }
         case TST_FOO_IMPL: {
             if (argc == 4) {
-                int base = atoi(data);
-                int pow =  atoi(argv[3]);
-                int res = custom_pow(base, pow);    // TODO(imp): Implement me
+                int base = strtol(data, &end, 0);
+                int pow =  strtol(argv[3], &end, 0);
+                int res = custom_pow(base, pow);
 
                 printf("%i\n", res);
             } else {
@@ -58,18 +44,14 @@ int main(int argc, const char** argv) {
             break;
         }
         case TST_MOD_IMPL: {
-            int num = atoi(data);
+            int num = strtol(data, &end, 0);
             int result = prime(num);
 
             printf("%i\n", result);
             break;
-
-            // TODO(print): Print to stdout `1` if `num` is prime number and `0` otherwise
-            // This function MUST be implemented in
-            // a separate C-module (not in `main` or `utils` module)
         }
         case TST_REVERSE_IMPL: {
-            int number = atoi(data);
+            int number = strtol(data, &end, 0);
             reverse(number);
 
             break;
