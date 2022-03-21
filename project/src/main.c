@@ -6,8 +6,8 @@
 #include "reverse.h"
 #include "utils.h"
 
-#define ERR_ARGS_COUNT (-1)
-#define ERR_WRONG_FLG (-2)
+#define ERR_ARGS_COUNT  (-1)
+#define ERR_WRONG_FLG   (-2)
 
 #define TST_FOO_FIX         1
 #define TST_FOO_IMPL        2
@@ -28,6 +28,7 @@ int main(int argc, const char** argv) {
         case TST_FOO_FIX: {
             int to = strtol(data, &end, 0);
             size_t ticks_count = timer_from(to);
+
             printf("%zu", ticks_count);
             break;
         }
