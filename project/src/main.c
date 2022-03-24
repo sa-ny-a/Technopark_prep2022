@@ -7,7 +7,7 @@ int main(void)
 {
 	int choice = 0;	
 	FILE *Ptr, *Ptr_2, *blackrecord;
-  	Data client_data, transfer;
+  	Data client_data = {0}, transfer = {0};
 	printf("%s", "please enter action\n1 enter data client:\n2 enter data transaction:\n3 update base\n");
 	while (scanf("%d", &choice) != -1)
 	{
@@ -18,7 +18,7 @@ int main(void)
 					puts("Not acess");
 				else
 				{
-					masterWrite(  Ptr , client_data);	
+					masterWrite(Ptr, client_data);	
 					fclose(Ptr);
 				}
 				break;
