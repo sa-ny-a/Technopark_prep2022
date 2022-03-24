@@ -1,9 +1,9 @@
 #ifndef PROJECT_INCLUDE_UTILS_H
 #define PROJECT_INCLUDE_UTILS_H
 
-#define filename1 "blackrecord.dat"
-#define filename2 "record.dat"
-#define filename3 "transaction.dat"
+#define filename_blackrecord "blackrecord.dat"
+#define filename_record "record.dat"
+#define filename_transaction "transaction.dat"
 
 typedef struct masterRecord {
 	int Number;
