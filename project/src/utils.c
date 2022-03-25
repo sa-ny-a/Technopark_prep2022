@@ -20,14 +20,14 @@ void masterWrite(FILE *ofPTR, Data Client) {
                 Client.Surname, Client.addres, Client.TelNumber, Client.indebtedness,
                 Client.credit_limit, Client.cash_payments);
         printf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n\n",
-            "1 Number account: ",
-            "2 Client name: ",
-            "3 Surname: ",
-            "4 Addres client: ",
-            "5 Client Telnum: ",
-            "6 Client indebtedness: ",
-            "7 Client credit limit: ",
-            "9 Client cash payments:");
+               "1 Number account: ",
+               "2 Client name: ",
+               "3 Surname: ",
+               "4 Addres client: ",
+               "5 Client Telnum: ",
+               "6 Client indebtedness: ",
+               "7 Client credit limit: ",
+               "9 Client cash payments:");
     }
 }
 
@@ -43,7 +43,7 @@ void transactionWrite(FILE *ofPTR, Data transfer) {
     }
 }
 
-void blackRecord(FILE *ofPTR, FILE *ofPTR_2, FILE *blackrecord, Data client_data, Data transfer) {
+void updateRecord(FILE *ofPTR, FILE *ofPTR_2, FILE *blackrecord, Data client_data, Data transfer) {
     while (fscanf(ofPTR, "%99d%99s%99s%99s%99s%99lf%99lf%99lf", &client_data.Number, client_data.Name,
                 client_data.Surname, client_data.addres, client_data.TelNumber, &client_data.indebtedness,
                 &client_data.credit_limit, &client_data.cash_payments) != -1) {

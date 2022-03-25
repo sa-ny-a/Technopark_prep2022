@@ -4,49 +4,49 @@
 
 int main(void) {
     int choice = 0;
-    FILE *Ptr;
-    FILE *Ptr_2;
-    FILE *blackrecord;
+    FILE *Ptr_record;
+    FILE *Ptr_transaction;
+    FILE *Ptr_blackrecord;
     Data client_data = {0};
     Data transfer = {0};
     printf("%s", "please enter action\n1 enter data client:\n2 enter data transaction:\n3 update base\n");
     while (scanf("%d", &choice) != -1) {
         switch (choice) {
             case 1:
-                Ptr = fopen(filename_record, "r+");
-                if (Ptr == NULL) {
+                Ptr_record = fopen(filename_record, "r+");
+                if (Ptr_record == NULL) {
                     puts("Not access");
                 } else {
-                    masterWrite(Ptr, client_data);
-                    fclose(Ptr);
+                    masterWrite(Ptr_record, client_data);
+                    fclose(Ptr_record);
                     }
                 break;
             case 2:
-                Ptr = fopen(filename_transaction, "r+");
-                if (Ptr == NULL) {
+                Ptr_transaction = fopen(filename_transaction, "r+");
+                if (Ptr_transaction == NULL) {
                     puts("Not access");
                 } else {
-                    transactionWrite(Ptr, transfer);
-                    fclose(Ptr);
+                    transactionWrite(Ptr_transaction, transfer);
+                    fclose(Ptr_transaction);
                     }
                 break;
             case 3:
-                Ptr = fopen(filename_record, "r");
-                Ptr_2 = fopen(filename_transaction, "r");
-                blackrecord = fopen(filename_blackrecord, "w");
-                if (Ptr == NULL || Ptr_2 == NULL || blackrecord == NULL) {
+                Ptr_record = fopen(filename_record, "r");
+                Ptr_transaction = fopen(filename_transaction, "r");
+                Ptr_blackrecord = fopen(filename_blackrecord, "w");
+                if (Ptr_record == NULL || Ptr_transaction == NULL || Ptr_blackrecord == NULL) {
                     puts("exit");
                 } else {
-                    blackRecord(Ptr, Ptr_2, blackrecord, client_data, transfer);
-                    fclose(Ptr);
-                    fclose(Ptr_2);
-                    fclose(blackrecord);
+                    updateRecord(Ptr_record, Ptr_transaction, Ptr_blackrecord, client_data, transfer);
+                    fclose(Ptr_record);
+                    fclose(Ptr_transaction);
+                    fclose(Ptr_blackrecord);
                     }
                 break;
             default:
                 puts("error");
                 break;
-            }
+        }
         printf("%s", "please enter action\n1 enter data client:\n2 enter data transaction:\n3 update base\n");
     }
     return 0;
