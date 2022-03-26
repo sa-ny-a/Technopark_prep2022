@@ -3,7 +3,7 @@ HDRS_DIR = project/include
 
 SRCS = \
 		project/src/main.c \
-		project/src/test_func.c \
+		project/src/test_utils.c \
 		project/src/utils.c
 
 .PHONY: all build rebuild check test memtest clean
