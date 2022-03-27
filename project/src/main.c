@@ -27,21 +27,20 @@ int main(int argc, const char** argv) {
     switch (test_case) {
         case TST_FOO_FIX: {
             int to = strtol(data, &end, 0);
-            size_t ticks_count = timer_from(to);
+            int ticks_count = timer_from(to);
 
-            printf("%zu", ticks_count);
+            printf("%i\n", ticks_count);
             break;
         }
         case TST_FOO_IMPL: {
-            if (argc == 4) {
-                int base = strtol(data, &end, 0);
-                int pow =  strtol(argv[3], &end, 0);
-                int res = custom_pow(base, pow);
-
-                printf("%i\n", res);
-            } else {
+            if (argc != 4) {
                 return ERR_ARGS_COUNT;
             }
+            int base = strtol(data, &end, 0);
+            int pow =  strtol(argv[3], &end, 0);
+            float res = custom_pow(base, pow);
+
+            printf("%g\n", res);
             break;
         }
         case TST_MOD_IMPL: {
