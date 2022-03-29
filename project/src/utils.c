@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include"masterRecord.h"
 #include "utils.h"
 
-void masterWrite(FILE *ofPTR, Data Client) {
+void masterWrite(FILE *ptr_record, master_record_t client) {
     printf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n\n",
             "1 Number account: ",
             "2 Client name: ",
@@ -13,12 +14,12 @@ void masterWrite(FILE *ofPTR, Data Client) {
             "6 Client indebtedness: ",
             "7 Client credit limit: ",
             "8 Client cash payments: ");
-    while (scanf("%99d%99s%99s%99s%99s%99lf%99lf%99lf", &Client.Number, Client.Name, Client.Surname,
-                Client.addres, Client.TelNumber, &Client.indebtedness, &Client.credit_limit,
-                &Client.cash_payments) != -1) {
-        fprintf(ofPTR, "%-12d%-11s%-11s%-16s%20s%12.2f%12.2f%12.2f\n", Client.Number, Client.Name,
-                Client.Surname, Client.addres, Client.TelNumber, Client.indebtedness,
-                Client.credit_limit, Client.cash_payments);
+    while (scanf("%99d%99s%99s%99s%99s%99lf%99lf%99lf", &client.number, client.name, client.surname,
+                client.addres, client.telNumber, &client.indebtedness, &client.credit_limit,
+                &client.cash_payments) != -1) {
+        fprintf(ptr_record, "%-12d%-11s%-11s%-16s%20s%12.2f%12.2f%12.2f\n", client.number, client.name,
+                client.surname, client.addres, client.telNumber, client.indebtedness,
+                client.credit_limit, client.cash_payments);
         printf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n\n",
                "1 Number account: ",
                "2 Client name: ",
@@ -31,29 +32,30 @@ void masterWrite(FILE *ofPTR, Data Client) {
     }
 }
 
-void transactionWrite(FILE *ofPTR, Data transfer) {
+void transactionWrite(FILE *ptr_record, master_record_t transfer) {
     printf("%s\n%s\n",
         "1 Number account: ",
         "2 Client cash payments: ");
-    while (scanf("%d %lf", &transfer.Number, &transfer.cash_payments) != -1) {
-        fprintf(ofPTR, "%-3d%-6.2f\n", transfer.Number, transfer.cash_payments);
+    while (scanf("%d %lf", &transfer.number, &transfer.cash_payments) != -1) {
+        fprintf(ptr_record, "%-3d%-6.2f\n", transfer.number, transfer.cash_payments);
         printf("%s\n%s\n",
             "1 Number account:",
             "2 Client cash payments: ");
     }
 }
 
-void updateRecord(FILE *ofPTR, FILE *ofPTR_2, FILE *blackrecord, Data client_data, Data transfer) {
-    while (fscanf(ofPTR, "%99d%99s%99s%99s%99s%99lf%99lf%99lf", &client_data.Number, client_data.Name,
-                client_data.Surname, client_data.addres, client_data.TelNumber, &client_data.indebtedness,
-                &client_data.credit_limit, &client_data.cash_payments) != -1) {
-    while (fscanf(ofPTR_2, "%d %lf", &transfer.Number, &transfer.cash_payments) != -1) {
-        if (client_data.Number == transfer.Number && transfer.cash_payments != 0)
+void updateRecord(FILE *ptr_record, FILE *ptr_transaction, FILE *ptr_updaterecord,
+                  master_record_t client_data, master_record_t transfer) {
+    while (fscanf(ptr_record, "%99d%99s%99s%99s%99s%99lf%99lf%99lf", &client_data.number, client_data.name,
+                  client_data.surname, client_data.addres, client_data.telNumber, &client_data.indebtedness,
+                  &client_data.credit_limit, &client_data.cash_payments) != -1) {
+    while (fscanf(ptr_transaction, "%d %lf", &transfer.number, &transfer.cash_payments) != -1) {
+        if (client_data.number == transfer.number && transfer.cash_payments != 0)
             client_data.credit_limit += transfer.cash_payments;
         }
-        fprintf(blackrecord, "%-12d%-11s%-11s%-16s%20s%12.2f%12.2f%12.2f\n", client_data.Number,
-                client_data.Name, client_data.Surname, client_data.addres, client_data.TelNumber,
+        fprintf(ptr_updaterecord, "%-12d%-11s%-11s%-16s%20s%12.2f%12.2f%12.2f\n", client_data.number,
+                client_data.name, client_data.surname, client_data.addres, client_data.telNumber,
                 client_data.indebtedness, client_data.credit_limit, client_data.cash_payments);
-    rewind(ofPTR_2);
+    rewind(ptr_transaction);
     }
 }

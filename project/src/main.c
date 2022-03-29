@@ -5,43 +5,43 @@
 
 int main(void) {
     int choice = 0;
-    FILE *Ptr_record;
-    FILE *Ptr_transaction;
-    FILE *Ptr_blackrecord;
-    Data client_data = {0};
-    Data transfer = {0};
+    FILE *ptr_record;
+    FILE *ptr_transaction;
+    FILE *ptr_updaterecord;
+    master_record_t client_data = {0};
+    master_record_t transfer = {0};
     printf("%s", "please enter action\n1 enter data client:\n2 enter data transaction:\n3 update base\n");
     while (scanf("%d", &choice) != -1) {
         switch (choice) {
             case 1:
-                Ptr_record = fopen(filename_record, "r+");
-                if (Ptr_record == NULL) {
+                ptr_record = fopen(filename_record, "r+");
+                if (ptr_record == NULL) {
                     puts("Not access");
                 } else {
-                    masterWrite(Ptr_record, client_data);
-                    fclose(Ptr_record);
+                    masterWrite(ptr_record, client_data);
+                    fclose(ptr_record);
                     }
                 break;
             case 2:
-                Ptr_transaction = fopen(filename_transaction, "r+");
-                if (Ptr_transaction == NULL) {
+                ptr_transaction = fopen(filename_transaction, "r+");
+                if (ptr_transaction == NULL) {
                     puts("Not access");
                 } else {
-                    transactionWrite(Ptr_transaction, transfer);
-                    fclose(Ptr_transaction);
+                    transactionWrite(ptr_transaction, transfer);
+                    fclose(ptr_transaction);
                     }
                 break;
             case 3:
-                Ptr_record = fopen(filename_record, "r");
-                Ptr_transaction = fopen(filename_transaction, "r");
-                Ptr_blackrecord = fopen(filename_blackrecord, "w");
-                if (Ptr_record == NULL || Ptr_transaction == NULL || Ptr_blackrecord == NULL) {
+                ptr_record = fopen(filename_record, "r");
+                ptr_transaction = fopen(filename_transaction, "r");
+                ptr_updaterecord = fopen(filename_updaterecord, "w");
+                if (ptr_record == NULL || ptr_transaction == NULL || ptr_updaterecord == NULL) {
                     puts("exit");
                 } else {
-                    updateRecord(Ptr_record, Ptr_transaction, Ptr_blackrecord, client_data, transfer);
-                    fclose(Ptr_record);
-                    fclose(Ptr_transaction);
-                    fclose(Ptr_blackrecord);
+                    updateRecord(ptr_record, ptr_transaction, ptr_updaterecord, client_data, transfer);
+                    fclose(ptr_record);
+                    fclose(ptr_transaction);
+                    fclose(ptr_updaterecord);
                     }
                 break;
             default:
