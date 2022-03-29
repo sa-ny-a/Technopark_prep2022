@@ -4,17 +4,6 @@
 enum max_size_array {kNameSize = 20, kSurnameSize = 20,
                      kAddresSize = 30, kTelnumberSize = 15};
 
-/*typedef struct masterRecord {
-    int Number;
-    char Name[20];
-    char Surname[20];
-    char addres[30];
-    char TelNumber[15];
-    double indebtedness;
-    double credit_limit;
-    double cash_payments;
-} Data;*/
-
 typedef struct master_record {
     int number;
     char name[kNameSize];
