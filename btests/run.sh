@@ -11,7 +11,7 @@ NO_ERROR_PATTERN="ERROR SUMMARY: 0 errors"
 
 RECORDS_F_NAME="record.dat"
 TRANSACTIONS_F_NAME="transaction.dat"
-BLACKRECORDS_F_NAME="blackrecord.dat"
+BLACKRECORDS_F_NAME="updaterecord.dat"
 TEST_F_NAME="test.dat"
 
 function check_mem() {
