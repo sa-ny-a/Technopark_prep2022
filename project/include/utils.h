@@ -25,8 +25,12 @@
 
 int master_write();
 int transaction_write();
-int update_record();
 void print_master_write();
 void print_transaction_write();
+
+int update_record();
+
+void write_record_test(FILE *ptr_record, master_record_t client_test);
+void write_transac_test(FILE *ptr_transaction, master_record_t transac_test);
 
 #endif  // PROJECT_INCLUDE_UTILS_H_
