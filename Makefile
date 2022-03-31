@@ -2,9 +2,11 @@ TARGET = ./main.out
 HDRS_DIR = project/include
 
 SRCS = \
+        project/src/main_test.c \
 		project/src/main.c \
 		project/src/test_utils.c \
 		project/src/utils.c
+
 
 .PHONY: all build rebuild check test memtest clean
 
@@ -28,3 +30,6 @@ memtest: $(TARGET)
 
 clean:
 	rm -rf $(TARGET) *.dat
+
+$(TARGET): $(SRCS)
+	$(CC) -Wpedantic -Wall -Wextra -Werror -I $(HDRS_DIR) -o $(TARGET) $(CFLAGS) $(SRCS)

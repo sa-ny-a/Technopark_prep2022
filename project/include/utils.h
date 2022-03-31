@@ -18,10 +18,14 @@
 #define CREDITLIM "7 Client credit limit: "
 #define CASHPAYM  "8 Client cash payments: "
 
-void master_write(FILE *ptr_record);
-void transaction_write(FILE *ptr_record, master_record_t transfer);
-void update_record(FILE *ptr_record, FILE  *ptr_transaction, FILE *ptr_updaterecord,
-                   master_record_t client_data, master_record_t transfer);
+#define ERROR     -1
+
+#define STR_SCAN  "%99d%99s%99s%99s%99s%99lf%99lf%99lf"
+#define STR_PRINT "%-12d%-11s%-11s%-16s%20s%12.2f%12.2f%12.2f\n"
+
+int master_write();
+int transaction_write();
+int update_record();
 void print_master_write();
 void print_transaction_write();
 

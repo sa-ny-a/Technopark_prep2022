@@ -6,7 +6,7 @@
 void write_to_file(const char *filename, test_record_t *data) {
     FILE *ptr_test = fopen(filename, "r+");
     if (ptr_test == NULL) {
-        puts("Not access");
+        printf("Not access");
     } else {
         fprintf(ptr_test, "%-12d%-11s%-11s\n", data->number, data->name, data->surname);
         fclose(ptr_test);
@@ -17,7 +17,7 @@ void write_to_file(const char *filename, test_record_t *data) {
 void read_from_file(const char *filename, test_record_t *data) {
     FILE *ptr_test = fopen(filename, "r");
     if (ptr_test == NULL) {
-        puts("Not access");
+        printf("Not access");
     } else {
         fscanf(ptr_test, "%99d%99s%99s", &data->number, data->name,
                data->surname);
