@@ -1,8 +1,20 @@
 #include <stdio.h>
 
-#include "masterRecord.h"
+// #include "test_utils.h"
 #include "test.h"
 #include "utils.h"
+
+void write_record_test(FILE *ptr_record, master_record_t client_test) {
+    fseek(ptr_record, 0L, SEEK_END);
+    fprintf(ptr_record, STR_PRINT, client_test.number, client_test.name, client_test.surname,
+            client_test.addres, client_test.telNumber, client_test.indebtedness,
+            client_test.credit_limit, client_test.cash_payments);
+}
+
+void write_transac_test(FILE *ptr_transaction, master_record_t transac_test) {
+    fseek(ptr_transaction, 0L, SEEK_END);
+    fprintf(ptr_transaction, "%-3d%-6.2f\n", transac_test.number, transac_test.cash_payments);
+}
 
 int record_test() {
     FILE *ptr_record;
@@ -27,7 +39,7 @@ int record_test() {
                                       &client_check.indebtedness, &client_check.credit_limit,
                                       &client_check.cash_payments);
             if (scan_info != ERROR) {
-                if (scan_info == 8) {
+                if (scan_info == CLIENT_SIZE_INFO) {
                     if (client_test.number == client_check.number)
                         return 1;
                 }
@@ -62,7 +74,7 @@ int transaction_test() {
             int scan_info = fscanf(ptr_transaction, "%d %lf", &transac_check.number,
                                    &transac_check.cash_payments);
             if (scan_info != ERROR) {
-                if (scan_info == 2) {
+                if (scan_info == CLIENT_TRANSAC_INFO) {
                     if (transac_check.number == transac_test.number &&
                         transac_check.cash_payments == transac_test.cash_payments)
                         return 1;
@@ -93,7 +105,7 @@ int updaterecord_test() {
                                       &client_check.indebtedness, &client_check.credit_limit,
                                       &client_check.cash_payments);
             if (scan_info != ERROR) {
-                if (scan_info == 8) {
+                if (scan_info == CLIENT_SIZE_INFO) {
                     if (update_check.number == client_check.number &&
                         update_check.credit_limit == client_check.credit_limit)
                         return 1;
@@ -109,12 +121,12 @@ int updaterecord_test() {
 
 void general_test() {
     printf("%s", "****  MY TEST START ****\n");
-    if (record_test() == 1) {
+    if (record_test() == TEST_INFO) {
         printf("%s", "Data record succeed\n");
-        if (transaction_test() == 1) {
+        if (transaction_test() == TEST_INFO) {
             printf("%s", "Data transaction succeed\n");
             update_record();
-            if (updaterecord_test() == 1) {
+            if (updaterecord_test() == TEST_INFO) {
                 printf("%s", "Data update succeed\n");
             } else {
                 printf("%s", "****  MY TEST ERROR ****\n");

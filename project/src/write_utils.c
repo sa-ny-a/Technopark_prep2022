@@ -64,15 +64,3 @@ int transaction_write() {
     }
     return EXIT_SUCCESS;
 }
-
-void write_record_test(FILE *ptr_record, master_record_t client_test) {
-    fseek(ptr_record, 0L, SEEK_END);
-    fprintf(ptr_record, STR_PRINT, client_test.number, client_test.name, client_test.surname,
-            client_test.addres, client_test.telNumber, client_test.indebtedness,
-            client_test.credit_limit, client_test.cash_payments);
-}
-
-void write_transac_test(FILE *ptr_transaction, master_record_t transac_test) {
-    fseek(ptr_transaction, 0L, SEEK_END);
-    fprintf(ptr_transaction, "%-3d%-6.2f\n", transac_test.number, transac_test.cash_payments);
-}

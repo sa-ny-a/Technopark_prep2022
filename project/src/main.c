@@ -29,6 +29,6 @@ int main(void) {
         printf("%s", "please enter action\n1 enter data client:\n2 enter data transaction:\n3 update base\n");
     }
     test_write_to_file();
-    general_test();
+    // general_test();
     return 0;
 }

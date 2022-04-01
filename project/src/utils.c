@@ -24,14 +24,14 @@ int update_record() {
                                        &client_data.indebtedness, &client_data.credit_limit,
                                        &client_data.cash_payments);
             if (scan_info_rec != ERROR) {
-                if (scan_info_rec == 8) {
+                if (scan_info_rec == CLIENT_SIZE_INFO) {
                     for (;;) {
                         int scan_info_transac = fscanf(ptr_transaction, "%d %lf", &transaction_data.number,
                                                        &transaction_data.cash_payments);
                         if (scan_info_transac != ERROR) {
-                            if (scan_info_transac == 2) {
+                            if (scan_info_transac == TRANSAC_SIZE_INFO) {
                                 if (client_data.number == transaction_data.number &&
-                                    transaction_data.cash_payments != 0) {
+                                    transaction_data.cash_payments != CLIENT_TRANSAC_INFO) {
                                     client_data.credit_limit += transaction_data.cash_payments;
                                 }
                             }
