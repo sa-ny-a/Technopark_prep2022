@@ -4,20 +4,18 @@ HDRS_DIR = project/include
 
 SRCS = \
 		project/src/main.c \
-		project/src/test_utils.c \
 		project/src/utils.c \
 		project/src/write_utils.c
 
 SRCS_TEST = \
         project/src/main_test.c \
-		project/src/test_utils.c \
 		project/src/test.c \
 		project/src/utils.c \
 	    project/src/write_utils.c
 
 .PHONY: all build rebuild check test memtest clean
 
-all: clean check test memtest
+all: clean check test memtest clean_test test_test memtest_test
 
 $(TARGET): $(SRCS)
 	$(CC) -Wpedantic -Wall -Wextra -Werror -I $(HDRS_DIR) -o $(TARGET) $(CFLAGS) $(SRCS)
@@ -45,11 +43,6 @@ $(TARGET_TEST): $(SRCS_TEST)
 	$(CC) -Wpedantic -Wall -Wextra -Werror -I $(HDRS_DIR) -o $(TARGET_TEST) $(CFLAGS) $(SRCS_TEST)
 
 build_test: $(TARGET_TEST)
-
-rebuild_test: clean build
-
-check_test:
-	./run_linters.sh
 
 test_test: $(TARGET_TEST)
 	./btests/run.sh $(TARGET_TEST)

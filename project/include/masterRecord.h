@@ -9,7 +9,7 @@ typedef struct master_record {
     char name[kNameSize];
     char surname[kSurnameSize];
     char addres[kAddresSize];
-    char telNumber[kTelnumberSize];
+    char tel_number[kTelnumberSize];
     double indebtedness;
     double credit_limit;
     double cash_payments;

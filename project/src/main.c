@@ -1,6 +1,5 @@
 #include <stdio.h>
 
-#include "test_utils.h"
 #include "test.h"
 #include "utils.h"
 
@@ -8,9 +7,11 @@
 #define DATA_TRANSAC        2
 #define DATA_UPDATE         3
 
+#define DATA_ACTION "please enter action\n1 enter data client:\n2 enter data transaction:\n3 update base\n\n"
+
 int main(void) {
     int choice = 0;
-    printf("%s", "please enter action\n1 enter data client:\n2 enter data transaction:\n3 update base\n\n");
+    printf("%s", DATA_ACTION);
     while (scanf("%d", &choice) != ERROR) {
         switch (choice) {
             case DATA_RECORD:
@@ -26,9 +27,7 @@ int main(void) {
                 printf("error");
                 break;
         }
-        printf("%s", "please enter action\n1 enter data client:\n2 enter data transaction:\n3 update base\n");
+        printf("%s", DATA_ACTION);
     }
-    test_write_to_file();
-    // general_test();
     return 0;
 }
