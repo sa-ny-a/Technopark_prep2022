@@ -1,9 +1,11 @@
-#define UTILS_H
-#ifndef UTILS_H
+#ifndef PROJECT_INCLUDE_UTILS_H_
+#define PROJECT_INCLUDE_UTILS_H_
 
-#define filename "transaction.dat";
+int master_write();
+int transaction_write();
+int update_record();
 
-// This comment is very useful
-printf("This message is very useful too")
+void print_master_write();
+void print_transaction_write();
 
-#endif //UTILS_H
+#endif  // PROJECT_INCLUDE_UTILS_H_

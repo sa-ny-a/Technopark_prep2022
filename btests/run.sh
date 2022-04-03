@@ -11,7 +11,7 @@ NO_ERROR_PATTERN="ERROR SUMMARY: 0 errors"
 
 RECORDS_F_NAME="record.dat"
 TRANSACTIONS_F_NAME="transaction.dat"
-BLACKRECORDS_F_NAME="blackrecord.dat"
+UPDATERECORDS_F_NAME="updaterecord.dat"
 
 function check_mem() {
 	RECEIVED=$(echo "${1}" | eval "valgrind --tool=memcheck --leak-check=summary --log-file=${VALGRIND_LOG} ${PROG_PATH}")
@@ -29,8 +29,8 @@ function check_mem() {
 }
 
 
-rm -f $RECORDS_F_NAME $TRANSACTIONS_F_NAME $BLACKRECORDS_F_NAME
-touch $RECORDS_F_NAME $TRANSACTIONS_F_NAME $BLACKRECORDS_F_NAME
+rm -f $RECORDS_F_NAME $TRANSACTIONS_F_NAME $UPDATERECORDS_F_NAME
+touch $RECORDS_F_NAME $TRANSACTIONS_F_NAME $UPDATERECORDS_F_NAME
 
 IN="1
 1
@@ -76,7 +76,7 @@ else
 	echo "${IN}" | eval "${PROG_PATH}"
 fi
 
-for file in $RECORDS_F_NAME $TRANSACTIONS_F_NAME $BLACKRECORDS_F_NAME; do
+for file in $RECORDS_F_NAME $TRANSACTIONS_F_NAME $UPDATERECORDS_F_NAME; do
 	diff -uN $file $ROOT/${file}.gold
 	if [[ "$?" != "0" ]]; then
 		echo "Files mismatches"
