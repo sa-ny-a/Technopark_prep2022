@@ -9,12 +9,12 @@ VALGRIND_LOG="valgrind.log"
 NO_LOST_PATTERN="All heap blocks were freed -- no leaks are possible"
 NO_ERROR_PATTERN="ERROR SUMMARY: 0 errors"
 
-RECORDS_F_NAME="record.dat"
-TRANSACTIONS_F_NAME="transaction.dat"
-UPDATERECORDS_F_NAME="updaterecord.dat"
-RECORDS_TEST_F_NAME="record_test.dat"
-TRANSACTIONS_TEST_F_NAME="transaction_test.dat"
-UPDATERECORDS_TEST_F_NAME="updaterecord_test.dat"
+RECORDS_F_NAME="test_files/record.dat"
+TRANSACTIONS_F_NAME="test_files/transaction.dat"
+UPDATERECORDS_F_NAME="test_files/updaterecord.dat"
+RECORDS_TEST_F_NAME="test_files/record_test.dat"
+TRANSACTIONS_TEST_F_NAME="test_files/transaction_test.dat"
+UPDATERECORDS_TEST_F_NAME="test_files/updaterecord_test.dat"
 
 function check_mem() {
 	RECEIVED=$(echo "${1}" | eval "valgrind --tool=memcheck --leak-check=summary --log-file=${VALGRIND_LOG} ${PROG_PATH}")
@@ -32,8 +32,8 @@ function check_mem() {
 }
 
 
-rm -f $RECORDS_F_NAME $TRANSACTIONS_F_NAME $BLACKRECORDS_F_NAME $TEST_F_NAME
-touch $RECORDS_F_NAME $TRANSACTIONS_F_NAME $BLACKRECORDS_F_NAME $TEST_F_NAME
+rm -f $RECORDS_F_NAME $TRANSACTIONS_F_NAME $UPDATERECORDS_F_NAME
+touch $RECORDS_F_NAME $TRANSACTIONS_F_NAME $UPDATERECORDS_F_NAME
 
 IN="1
 1
@@ -79,7 +79,7 @@ else
 	echo "${IN}" | eval "${PROG_PATH}"
 fi
 
-for file in $RECORDS_F_NAME $TRANSACTIONS_F_NAME $BLACKRECORDS_F_NAME; do
+for file in $RECORDS_F_NAME $TRANSACTIONS_F_NAME $UPDATERECORDS_F_NAME; do
 	diff -uN $file $ROOT/${file}.gold
 	if [[ "$?" != "0" ]]; then
 		echo "Files mismatches"

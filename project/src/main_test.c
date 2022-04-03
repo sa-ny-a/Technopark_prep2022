@@ -1,7 +1,7 @@
 #include <stdio.h>
 
+#include "define_data.h"
 #include "test.h"
-#include "utils.h"
 
 int main(void) {
     general_test();

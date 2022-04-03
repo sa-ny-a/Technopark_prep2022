@@ -1,6 +1,7 @@
 #include <stdio.h>
-#include <stdlib.h>
 
+#include "define_data.h"
+#include"masterRecord.h"
 #include "utils.h"
 
 void print_master_write() {
@@ -17,7 +18,7 @@ int master_write() {
     FILE *ptr_record;
     ptr_record = fopen(filename_record, "r+");
     if (ptr_record == NULL) {
-        printf("Not access");
+        printf("Not access\n");
         return ERROR;
     }
     master_record_t client = {0};
@@ -28,8 +29,8 @@ int master_write() {
                              &client.credit_limit, &client.cash_payments);
         if (scan_info != ERROR) {
             fprintf(ptr_record, STR_PRINT, client.number, client.name,
-                    client.surname, client.addres, client.tel_number, client.indebtedness,
-                    client.credit_limit, client.cash_payments);
+                    client.surname, client.addres, client.tel_number,
+                    client.indebtedness, client.credit_limit, client.cash_payments);
         } else {
             break;
             }
@@ -42,18 +43,17 @@ int transaction_write() {
     FILE *ptr_transaction;
     ptr_transaction = fopen(filename_transaction, "r+");
     if (ptr_transaction == NULL) {
-        printf("Not access");
+        printf("Not access\n");
         return ERROR;
     }
     master_record_t transaction = {0};
     for (;;) {
         print_transaction_write();
         int scan_info = scanf("%d %lf", &transaction.number, &transaction.cash_payments);
-        if (scan_info != ERROR) {
+        if (scan_info != ERROR)
             fprintf(ptr_transaction, "%-3d%-6.2f\n", transaction.number, transaction.cash_payments);
-        } else {
+        else
             break;
-        }
     }
     fclose(ptr_transaction);
     return 0;
