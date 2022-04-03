@@ -27,7 +27,7 @@ int master_write() {
         int scan_info = scanf(STR_SCAN, &client.number, client.name, client.surname,
                              client.addres, client.tel_number, &client.indebtedness,
                              &client.credit_limit, &client.cash_payments);
-        if (scan_info != ERROR) {
+        if (scan_info == CLIENT_SIZE_INFO) {
             fprintf(ptr_record, STR_PRINT, client.number, client.name,
                     client.surname, client.addres, client.tel_number,
                     client.indebtedness, client.credit_limit, client.cash_payments);

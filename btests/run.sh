@@ -9,12 +9,9 @@ VALGRIND_LOG="valgrind.log"
 NO_LOST_PATTERN="All heap blocks were freed -- no leaks are possible"
 NO_ERROR_PATTERN="ERROR SUMMARY: 0 errors"
 
-RECORDS_F_NAME="test_files/record.dat"
-TRANSACTIONS_F_NAME="test_files/transaction.dat"
-UPDATERECORDS_F_NAME="test_files/updaterecord.dat"
-RECORDS_TEST_F_NAME="test_files/record_test.dat"
-TRANSACTIONS_TEST_F_NAME="test_files/transaction_test.dat"
-UPDATERECORDS_TEST_F_NAME="test_files/updaterecord_test.dat"
+RECORDS_F_NAME="record.dat"
+TRANSACTIONS_F_NAME="transaction.dat"
+UPDATERECORDS_F_NAME="updaterecord.dat"
 
 function check_mem() {
 	RECEIVED=$(echo "${1}" | eval "valgrind --tool=memcheck --leak-check=summary --log-file=${VALGRIND_LOG} ${PROG_PATH}")

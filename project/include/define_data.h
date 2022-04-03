@@ -1,9 +1,9 @@
 #ifndef PROJECT_INCLUDE_DEFINE_DATA_H_
 #define PROJECT_INCLUDE_DEFINE_DATA_H_
 
-#define filename_updaterecord "test_files/updaterecord.dat"
-#define filename_record "test_files/record.dat"
-#define filename_transaction "test_files/transaction.dat"
+#define filename_updaterecord "updaterecord.dat"
+#define filename_record "record.dat"
+#define filename_transaction "transaction.dat"
 
 #include <stdio.h>
 
@@ -18,7 +18,7 @@
 #define CREDITLIM "7 Client credit limit: "
 #define CASHPAYM  "8 Client cash payments: "
 
-#define STR_SCAN  "%99d%99s%99s%99s%99s%99lf%99lf%99lf"
+#define STR_SCAN  "%d%20s%20s%30s%15s%lf%lf%lf"
 #define STR_PRINT "%-12d%-11s%-11s%-16s%20s%12.2f%12.2f%12.2f\n"
 
 enum const_values {
