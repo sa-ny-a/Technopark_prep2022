@@ -28,7 +28,6 @@ int main(void) {
                 break;
         }
         printf("%s", DATA_ACTION);
-        scanf("%*[^\n]");
     }
     return 0;
 }

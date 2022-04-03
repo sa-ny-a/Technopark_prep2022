@@ -23,8 +23,6 @@
 
 enum const_values {
     ERROR = -1,
-    CLIENT_SIZE_INFO = 8,
-    TRANSAC_SIZE_INFO = 2,
     CLIENT_TRANSAC_INFO = 0,
     TEST_INFO = 1
 };

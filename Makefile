@@ -15,7 +15,7 @@ SRCS_TEST = \
 
 .PHONY: all build rebuild check test memtest clean
 
-all: clean check test memtest clean_test test_test memtest_test
+all: clean check test memtest
 
 $(TARGET): $(SRCS)
 	$(CC) -Wpedantic -Wall -Wextra -Werror -I $(HDRS_DIR) -o $(TARGET) $(CFLAGS) $(SRCS)

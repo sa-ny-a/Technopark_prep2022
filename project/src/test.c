@@ -116,19 +116,19 @@ void general_test() {
     printf("%s", "****  MY TEST START ****\n");
     if (record_test() == TEST_INFO) {
         printf("%s", "Data record succeed\n");
-        if (transaction_test() == TEST_INFO) {
-            printf("%s", "Data transaction succeed\n");
-            update_record();
-            if (updaterecord_test() == TEST_INFO) {
-                printf("%s", "Data update succeed\n");
-            } else {
-                printf("%s", "****  MY TEST ERROR ****\n");
-                return;
-            }
-        } else {
-            printf("%s", "****  MY TEST ERROR ****\n");
-            return;
-        }
+    } else {
+        printf("%s", "****  MY TEST ERROR ****\n");
+        return;
+    }
+    if (transaction_test() == TEST_INFO) {
+        printf("%s", "Data transaction succeed\n");
+        update_record();
+    } else {
+        printf("%s", "****  MY TEST ERROR ****\n");
+        return;
+    }
+    if (updaterecord_test() == TEST_INFO) {
+        printf("%s", "Data update succeed\n");
     } else {
         printf("%s", "****  MY TEST ERROR ****\n");
         return;
