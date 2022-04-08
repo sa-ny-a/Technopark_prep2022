@@ -10,7 +10,8 @@ HDRS = \
 SRCS = \
 	   project/src/main.c \
 	   project/src/init_operations.c \
-	   project/src/basic_operations.c
+	   project/src/basic_operations.c \
+	   project/src/math_operations.c
 
 # Test
 TST_HDRS = \
