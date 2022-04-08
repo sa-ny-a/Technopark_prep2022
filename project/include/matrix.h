@@ -3,6 +3,8 @@
 
 #include <stddef.h>
 
+#define ERROR -1
+
 typedef struct Matrix {
     size_t rows;
     size_t cols;

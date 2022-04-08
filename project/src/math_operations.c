@@ -14,16 +14,17 @@ Matrix* mul_scalar(const Matrix* matrix, double val) {
     }
     return matr_mul_scalar;
 }
+
 Matrix* transp(const Matrix* matrix) {
     if (matrix == NULL) {
         return NULL;
     }
-    Matrix* matr_transp = create_matrix(matrix->rows, matrix->cols);
+    Matrix* matr_transp = create_matrix(matrix->cols, matrix->rows);
     if (matr_transp == NULL)
         return NULL;
     for (size_t i = 0; i < matrix->rows; i++) {
         for (size_t j = 0; j < matrix->cols; j++) {
-            matr_transp->matrix[i][j] = matrix->matrix[j][i];
+            matr_transp->matrix[j][i] = matrix->matrix[i][j];
         }
     }
     return matr_transp;
@@ -43,6 +44,7 @@ Matrix* sum(const Matrix* l, const Matrix* r) {
     }
     return matr_sum;
 }
+
 Matrix* sub(const Matrix* l, const Matrix* r) {
     if (l == NULL || r == NULL || l->rows != r->rows || l->cols != r->cols) {
         return NULL;
@@ -58,6 +60,7 @@ Matrix* sub(const Matrix* l, const Matrix* r) {
     }
     return matr_sub;
 }
+
 Matrix* mul(const Matrix* l, const Matrix* r) {
     if (l == NULL || r == NULL || l->cols != r->rows) {
         return NULL;
@@ -70,7 +73,7 @@ Matrix* mul(const Matrix* l, const Matrix* r) {
         for (size_t j = 0; j < r->cols; j++) {
             matr_mul->matrix[i][j] = 0;
             for (size_t k = 0; k < l->cols; k++)
-            matr_mul->matrix[i][j] += l->matrix[i][k] * r->matrix[k][i];
+            matr_mul->matrix[i][j] += l->matrix[i][k] * r->matrix[k][j];
         }
     }
     return matr_mul;

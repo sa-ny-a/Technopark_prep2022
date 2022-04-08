@@ -4,6 +4,9 @@
 
 #include "matrix.h"
 
+#define DIM_MATR_PARAM 2
+#define ELEM_SIZE      1
+
 Matrix* create_matrix_from_file(const char* path_file) {
     if (path_file == NULL) {
         return NULL;
@@ -14,15 +17,15 @@ Matrix* create_matrix_from_file(const char* path_file) {
     }
     size_t rows;
     size_t cols;
-    if (fscanf(ptr_matrix, "%zu %zu", &rows, &cols) == 2) {
+    if (fscanf(ptr_matrix, "%zu %zu", &rows, &cols) == DIM_MATR_PARAM) {
         Matrix *matrix = create_matrix(rows, cols);
         if (matrix == NULL) {
             fclose(ptr_matrix);
             return NULL;
         }
-        for (size_t i = 0; i < rows; ++i) {
-            for (size_t j = 0; j < cols; ++j) {
-                if (fscanf(ptr_matrix, "%lf", &matrix->matrix[i][j]) != 1) {
+        for (size_t i = 0; i < rows; i++) {
+            for (size_t j = 0; j < cols; j++) {
+                if (fscanf(ptr_matrix, "%lf", &matrix->matrix[i][j]) != ELEM_SIZE) {
                     fclose(ptr_matrix);
                     free_matrix(matrix);
                     return NULL;
