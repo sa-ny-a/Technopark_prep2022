@@ -16,5 +16,17 @@ int get_cols(const Matrix* matrix, size_t* cols) {
         return 0;
 }
 
-int get_elem(const Matrix* matrix, size_t row, size_t col, double* val);
-int set_elem(Matrix* matrix, size_t row, size_t col, double val);
+int get_elem(const Matrix* matrix, size_t row, size_t col, double* val) {
+    if (matrix == NULL || val == NULL || row > matrix->rows || col > matrix->cols) {
+        return -1;
+    }
+    *val = matrix->matrix[row][col];
+    return 0;
+}
+int set_elem(Matrix* matrix, size_t row, size_t col, double val) {
+    if (matrix == NULL || row > matrix->rows || col > matrix->cols) {
+        return -1;
+    }
+    matrix->matrix[row][col] = val;
+    return 0;
+}
