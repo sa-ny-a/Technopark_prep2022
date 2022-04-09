@@ -5,7 +5,7 @@ int get_rows(const Matrix* matrix, size_t* rows) {
         return ERROR;
     }
     *rows = matrix->rows;
-        return 0;
+    return 0;
 }
 
 int get_cols(const Matrix* matrix, size_t* cols) {
@@ -13,7 +13,7 @@ int get_cols(const Matrix* matrix, size_t* cols) {
         return ERROR;
     }
     *cols = matrix->cols;
-        return 0;
+    return 0;
 }
 
 int get_elem(const Matrix* matrix, size_t row, size_t col, double* val) {

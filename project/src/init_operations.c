@@ -11,14 +11,14 @@ Matrix* create_matrix_from_file(const char* path_file) {
     if (path_file == NULL) {
         return NULL;
     }
-    FILE *ptr_matrix = fopen(path_file, "r");
+    FILE* ptr_matrix = fopen(path_file, "r");
     if (ptr_matrix == NULL) {
         return NULL;
     }
     size_t rows;
     size_t cols;
     if (fscanf(ptr_matrix, "%zu %zu", &rows, &cols) == DIM_MATR_PARAM) {
-        Matrix *matrix = create_matrix(rows, cols);
+        Matrix* matrix = create_matrix(rows, cols);
         if (matrix == NULL) {
             fclose(ptr_matrix);
             return NULL;
@@ -43,7 +43,7 @@ Matrix* create_matrix(size_t rows, size_t cols) {
     if (rows < 1 || cols < 1) {
         return NULL;
     }
-    Matrix *matrix = malloc(sizeof(Matrix));
+    Matrix* matrix = malloc(sizeof(Matrix));
     if (matrix == NULL) {
         return NULL;
     }
@@ -54,7 +54,7 @@ Matrix* create_matrix(size_t rows, size_t cols) {
         free(matrix);
         return NULL;
     }
-    for (size_t i = 0; i < rows; ++i) {
+    for (size_t i = 0; i < rows; i++) {
         matrix->matrix[i] = calloc(cols, sizeof(double));
         if (matrix->matrix[i] == NULL) {
             free_matrix(matrix);
