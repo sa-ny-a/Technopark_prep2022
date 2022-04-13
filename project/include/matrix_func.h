@@ -1,9 +1,9 @@
-#ifndef PROJECT_INCLUDE_MATRIX_H_
-#define PROJECT_INCLUDE_MATRIX_H_
+#ifndef PROJECT_INCLUDE_MATRIX_FUNC_H_
+#define PROJECT_INCLUDE_MATRIX_FUNC_H_
 
 #include <stddef.h>
 
-#define ERROR      -1
+#define ERROR -1
 
 typedef struct Matrix {
     size_t rows;
@@ -35,4 +35,9 @@ int det(const Matrix* matrix, double* val);
 Matrix* adj(const Matrix* matrix);
 Matrix* inv(const Matrix* matrix);
 
-#endif  // PROJECT_INCLUDE_MATRIX_H_
+// Additional utils
+Matrix *get_minor(const Matrix *matrix, Matrix *minor, size_t row, size_t col);
+Matrix* general_func_sum_sub(const Matrix* l, const Matrix* r, int sign);
+int sign_func(size_t number);
+
+#endif  // PROJECT_INCLUDE_MATRIX_FUNC_H_

@@ -3,7 +3,7 @@
 
 #include <string.h>
 
-#include "matrix.h"
+#include "matrix_func.h"
 // FIXME(t.razumov): base accuracy
 #define eps_base 1e-6
 

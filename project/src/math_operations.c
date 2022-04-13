@@ -1,4 +1,4 @@
-#include "matrix.h"
+#include "matrix_func.h"
 
 Matrix* mul_scalar(const Matrix* matrix, double val) {
     if (matrix == NULL) {
@@ -31,33 +31,12 @@ Matrix* transp(const Matrix* matrix) {
 }
 
 Matrix* sum(const Matrix* l, const Matrix* r) {
-    if (l == NULL || r == NULL || l->rows != r->rows || l->cols != r->cols) {
-        return NULL;
-    }
-    Matrix* matr_sum = create_matrix(l->rows, l->cols);
-    if (matr_sum == NULL)
-        return NULL;
-    for (size_t i = 0; i < l->rows; i++) {
-        for (size_t j = 0; j < l->cols; j++) {
-            matr_sum->matrix[i][j] = l->matrix[i][j] + r->matrix[i][j];
-        }
-    }
+    Matrix* matr_sum = general_func_sum_sub(l, r, 1);
     return matr_sum;
 }
 
 Matrix* sub(const Matrix* l, const Matrix* r) {
-    if (l == NULL || r == NULL || l->rows != r->rows || l->cols != r->cols) {
-        return NULL;
-    }
-    Matrix* matr_sub = create_matrix(l->rows, l->cols);
-    if (matr_sub == NULL) {
-        return NULL;
-    }
-    for (size_t i = 0; i < l->rows; i++) {
-        for (size_t j = 0; j < l->cols; j++) {
-            matr_sub->matrix[i][j] = l->matrix[i][j] - r->matrix[i][j];
-        }
-    }
+    Matrix* matr_sub = general_func_sum_sub(l, r, -1);
     return matr_sub;
 }
 

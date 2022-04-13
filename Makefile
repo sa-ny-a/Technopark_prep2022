@@ -12,7 +12,7 @@ SRCS = \
 	   project/src/basic_operations.c \
 	   project/src/math_operations.c \
 	   project/src/extra_operations.c \
-	   project/src/extra_utils.c
+	   project/src/add_utils.c
 
 # Test
 TST_HDRS = \
@@ -24,7 +24,7 @@ TST_SRCS = \
 	       project/src/basic_operations.c \
 	       project/src/math_operations.c \
 	       project/src/extra_operations.c \
-		   project/src/extra_utils.c \
+		   project/src/add_utils.c \
 		   project/tests/src/*.c
 
 .PHONY: all check build test memtest testextra memtestextra rebuild clean

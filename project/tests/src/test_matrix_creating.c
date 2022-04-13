@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "matrix.h"
+#include "matrix_func.h"
 #include "tests.h"
 #include "utils.h"
 

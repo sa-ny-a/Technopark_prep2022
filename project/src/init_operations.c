@@ -2,7 +2,7 @@
 #include <malloc.h>
 #include <stdlib.h>
 
-#include "matrix.h"
+#include "matrix_func.h"
 
 #define DIM_MATR_PARAM 2
 #define ELEM_SIZE      1

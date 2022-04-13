@@ -1,4 +1,4 @@
-#include "matrix.h"
+#include "matrix_func.h"
 
 int get_rows(const Matrix* matrix, size_t* rows) {
     if (matrix == NULL || rows == NULL) {

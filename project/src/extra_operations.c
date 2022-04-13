@@ -2,8 +2,7 @@
 #include <math.h>
 #include <float.h>
 
-// #include "matrix.h"
-#include "extra_utils.h"
+#include "matrix_func.h"
 
 int det(const Matrix* matrix, double* val) {
     if (matrix == NULL || val == NULL || matrix->cols != matrix->rows) {
