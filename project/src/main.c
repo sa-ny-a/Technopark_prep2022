@@ -14,7 +14,7 @@ int main(int argc, const char **argv) {
         printf("error\n");
         return -1;
     } else {
-        printf("success\n");
+        printf("\nsuccess\n");
     }
     return 0;
 }

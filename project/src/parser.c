@@ -13,8 +13,8 @@
 
 static int get_name_to(char* str, char* name_to) {
     if(strlen(str) > 10) {
-        if (*(str) == 'T' && *(str + 1) == 'o') {
-            for (size_t i = 3; i < strlen(str); i++) {
+        if (*(str) == 'D' && *(str + 1) == 'a' && *(str + 2) == 't' && *(str + 3) == 'e') {
+            for (size_t i = 6; i < strlen(str); i++) {
                 if (*(str + i) != '\n') {
                     name_to = strncat(name_to, &*(str + i), 1);
                 } else {
@@ -40,7 +40,7 @@ int parser(const char* path) {
         char now_string[128];
         char *name_to;
         name_to = (char*)malloc(128);
-        while (!feof(email)) {
+/*        while (!feof(email)) {
             fgets(now_string, 128, email);
             printf("%s", now_string);
             int buf = get_name_to(now_string, name_to);
@@ -53,6 +53,10 @@ int parser(const char* path) {
                 printf("No name: ");
                 return 0;
             }
+            */
+        while (!feof(email)) {
+            fgets(now_string, 128, email);
+            printf("%s", now_string);    
         }
         return 1;
     }
