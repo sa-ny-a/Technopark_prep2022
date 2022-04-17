@@ -1,63 +1,129 @@
+#include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include "../include/parser.h"
 
-// ./main.out btests/emails/8bitmime.eml - тест
-// make build ; ./main.out btests/emails/8bitmime.eml
+typedef struct Message {
+    char* nm_from;
+    char* nm_to;
+    char* date;
+    // int size_ltr;
+} Data;
 
-#include <string.h>
-#include <stdio.h>
-#include <ctype.h>
-#include <stdlib.h>
-
-#define SIZE_ARRAY_CHAR 128
-
-
-static int get_name_to(char* str, char* name_to) {
-    if(strlen(str) > 10) {
-        if (*(str) == 'D' && *(str + 1) == 'a' && *(str + 2) == 't' && *(str + 3) == 'e') {
-            for (size_t i = 6; i < strlen(str); i++) {
-                if (*(str + i) != '\n') {
-                    name_to = strncat(name_to, &*(str + i), 1);
-                } else {
-                    break;
-                }
-            }
-            return 2;
-        } else {
-            return 1;
-        }
-    } else {
-        return 0;
-    }
+static Data* init() {
+    Data* dt = malloc(sizeof(Data));
+    dt->nm_from = (char*)malloc(128);
+    dt->nm_to = (char*)malloc(128);
+    dt->date = (char*)malloc(128);
+    return dt;
 }
 
-
-int parser(const char* path) {
-    FILE* email = fopen(path, "r");
+static int get_name_from(const char* path, Data* dt) {
+    FILE *email = fopen(path, "r");
     if (email == NULL) {
         printf("Not open: ");
         return 0;
     } else {
-        char now_string[128];
-        char *name_to;
-        name_to = (char*)malloc(128);
-/*        while (!feof(email)) {
-            fgets(now_string, 128, email);
-            printf("%s", now_string);
-            int buf = get_name_to(now_string, name_to);
-            if (buf == 2) {
-                printf("%s", name_to);
+        char str[128];
+        while (!feof(email)) {
+            fgets(str, 128, email);
+            if(strlen(str) > 10) {
+                if (*(str) == 'F' && *(str + 1) == 'r' && *(str + 2) == 'o' && *(str + 3) == 'm') {
+                    for (size_t i = 6; i < strlen(str); i++) {
+                        if (*(str + i) != '\n') {
+                            dt->nm_from = strncat(dt->nm_from, &*(str + i), 1);
+                        } else {
+                            break;
+                        }
+                    }
+                    fclose(email);
+                    return 1;
+                }
+            }
+        }
+        fclose(email);
+        return 0;
+    }
+}
+
+static int get_name_to(const char* path, Data* dt) {
+    FILE *email = fopen(path, "r");
+    if (email == NULL) {
+        printf("Not open: ");
+        return 0;
+    } else {
+        char str[128];
+        while (!feof(email)) {
+            fgets(str, 128, email);
+            if(strlen(str) > 10) {
+                if (*(str) == 'T' && *(str + 1) == 'o') {
+                    for (size_t i = 4; i < strlen(str); i++) {
+                        if (*(str + i) != '\n') {
+                            dt->nm_to = strncat(dt->nm_to, &*(str + i), 1);
+                        } else {
+                            break;
+                        }
+                    }
+                    fclose(email);
+                    return 1;
+                }
+            }
+        }
+        fclose(email);
+        return 0;
+    }
+}
+
+static int get_name_date(const char* path, Data* dt) {
+    FILE *email = fopen(path, "r");
+    if (email == NULL) {
+        printf("Not open: ");
+        return 0;
+    } else {
+        char str[128];
+        while (!feof(email)) {
+            fgets(str, 128, email);
+            if(strlen(str) > 10) {
+                if (*(str) == 'D' && *(str + 1) == 'a' && *(str + 2) == 't' && *(str + 3) == 'e') {
+                    for (size_t i = 6; i < strlen(str); i++) {
+                        if (*(str + i) != '\n') {
+                            dt->date = strncat(dt->date, &*(str + i), 1);
+                        } else {
+                            break;
+                        }
+                    }
+                    fclose(email);
+                    return 1;
+                }
+            }
+        }
+        fclose(email);
+        return 0;
+    }
+}
+
+int parser(const char* path) {
+    Data* info;
+    info = init();
+    if (get_name_from(path,info) == 1) {
+        printf("%s", info->nm_from);
+        if (get_name_to(path, info) == 1) {
+            printf("|%s", info->nm_to);
+            if (get_name_date(path, info) == 1) {
+                printf("|%s", info->date);
                 return 1;
-            } else if (buf == 1) {
-                printf(" ");
             } else {
-                printf("No name: ");
+                printf("\nNo date: ");
                 return 0;
             }
-            */
-        while (!feof(email)) {
-            fgets(now_string, 128, email);
-            printf("%s", now_string);    
+        } else {
+            printf("\nNo name to: ");
+            return 0;
         }
-        return 1;
+    } else {
+        printf("\nNo name from: ");
+        return 0;
     }
 }
