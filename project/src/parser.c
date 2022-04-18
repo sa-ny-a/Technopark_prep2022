@@ -1,12 +1,5 @@
 #include "../include/parser.h"
 
-Data* init() {
-    Data* dt = malloc(sizeof(Data));
-    dt->nm_from = (char*)malloc(SIZE_OF_ARRAY);
-    dt->nm_to = (char*)malloc(SIZE_OF_ARRAY);
-    dt->date = (char*)malloc(SIZE_OF_ARRAY);
-    return dt;
-}
 
 static int check_string_on_annons(const char* path, const char* control, char* back) {
     FILE *ptr = fopen(path, "r");
@@ -63,7 +56,7 @@ static int check_string_on_annons(const char* path, const char* control, char* b
     return 0;
 }
 
-static int get_key(const char* str, char* key) {
+static int get_key_in_str(const char* str, char* key) {
     const char* control_sum = "boundary";
         for (size_t i = 0, check_sum = 0; i < strlen(str) - strlen(control_sum); i++) {
             for (size_t j = 0; j < strlen(control_sum); j++) {
@@ -88,88 +81,113 @@ static int get_key(const char* str, char* key) {
     return 0;
 }
 
-static int get_score(const char* path, Data* dt) {
-    char *key = (char *) malloc(SIZE_OF_ARRAY);
-    char *buf = (char *) malloc(SIZE_OF_ARRAY);
-    int MRK_KEY = 0;  // Проверка наличия ключа
-    int MRK_STR_CONTENT = 1;
-    dt->score = 0;
-    FILE *email;
-    email = fopen(path, "r");
-    if (email == NULL) {
-        printf("Not open: ");
-        return 0;
-    } else {
-        char str[SIZE_OF_ARRAY];
-        Data *trash = init();
-
-        if (MRK_STR_CONTENT == 1) {  // Тут проверяем наличее контента
-            if (check_string_on_annons(email, "content-type:", trash->nm_to) == 1) {
-                MRK_STR_CONTENT = 0;
-                MRK_KEY = get_key(trash->nm_to, key);  // Если ключ еще на этой строке
-            }
-        } else {
-            if (strlen(str) > 10) {
-                fgets(str, SIZE_OF_ARRAY, email);
-                if (*(str) == ' ' || *(str) == '\t') {  // Работаем уже в поисках ключа
-                    MRK_KEY = get_key(str, key);
+static int get_key_in_txt(const char* path, char* key) {
+    int BUF_KEY_CONTROL = check_string_on_annons(path, "\tboundary", key);
+    if (BUF_KEY_CONTROL == 1) {
+        char *buf = (char*)malloc(SIZE_OF_ARRAY);
+        buf = strncpy(buf, "", strlen(buf));
+        for (size_t i = 0; i < strlen(key); i++) {
+            if (*(key + i) != '"') {
+                if (*(key + i) != '\n' && *(key + i) != '\r' && *(key + i) != ' ' && *(key + i) != ';') {
+                    buf = strncat(buf, &*(key + i), 1);
+                } else {
+                    break;
                 }
             }
         }
-        fclose(email);
-    }
-    email = fopen(path, "r");
-    if (email == NULL && MRK_KEY == 0) {
-        printf("Not open: ");
-        return 0;
+        key = strncpy(key, "", strlen(key));
+        key = strncpy(key, buf, strlen(buf));
+        free(buf);
+        return 1;
     } else {
-        char str[SIZE_OF_ARRAY];
-        while (!feof(email)) {
-            fgets(str, SIZE_OF_ARRAY, email);
-            if (strlen(str) > 10) {
-                if (*(str) == '-' || *(str + 1) == '-') {
-                    buf = strcpy(buf, "");
-                    for (size_t i = 2; i < strlen(str); i++) {
-                        if (*(str + i) != '\n' && *(str + i) != '\r') {
-                            buf = strncat(buf, &*(str + i), 1);
-                        } else {
-                            break;
+        return 0;
+    }
+}
+
+
+static int get_score(const char* path, Data* dt) {
+    char *key = (char*)malloc(SIZE_OF_ARRAY);
+    char *buf = (char*)malloc(SIZE_OF_ARRAY);
+    int MRK_KEY = 0;  // Проверка наличия ключа
+    key = strncpy(key, "", 1);
+    buf = strncpy(buf, "", 1);
+    int MRK_STR_CONTENT = 0;
+    dt->score = 0;
+    if (check_string_on_annons(path, "content-type:", buf) == 1) {
+        MRK_STR_CONTENT = 1;
+        MRK_KEY = get_key_in_str(buf, key);
+        if (MRK_KEY == 0) {
+            MRK_KEY = get_key_in_txt(path, key);
+        }
+    }
+    if (MRK_KEY == 1) {
+        FILE *email;
+        email = fopen(path, "r");
+        if (email == NULL) {
+            printf("Not open: ");
+            return 0;
+        } else {
+            char str[SIZE_OF_ARRAY];
+            while (!feof(email)) {
+                fgets(str, SIZE_OF_ARRAY, email);
+                if (strlen(str) > 2) {
+                    if (*(str) == '-' || *(str + 1) == '-') {
+                        buf = strncpy(buf, "", 1);
+
+                        for (size_t i = 2; i < strlen(str); i++) {
+                            if (*(str + i) != '\n' && *(str + i) != '\r') {
+                                buf = strncat(buf, &*(str + i), 1);
+                            } else {
+                                break;
+                            }
+                        }
+                        if (strcmp(buf, key) == 0) {
+                            dt->score += 1;
                         }
                     }
-                    if (strcmp(buf, key) == 0) {
-                        dt->score += 1;
-                    }
                 }
             }
+            free(key);
+            free(buf);
+            fclose(email);
+            return 1;
         }
-        fclose(email);
     }
     if ((MRK_KEY == 0 && MRK_STR_CONTENT == 0) || (MRK_KEY == 0 && MRK_STR_CONTENT == 1)) {
         dt->score = 1;
     }
+    free(key);
+    free(buf);
     return 1;
 }
 
 int parser(const char* path) {
-    Data* info;
-    info = init();
+    Data* info = malloc(sizeof(Data));;
+    info->nm_from = (char*)malloc(SIZE_OF_ARRAY);
+    info->nm_to = (char*)malloc(SIZE_OF_ARRAY);
+    info->date = (char*)malloc(SIZE_OF_ARRAY);
     if (check_string_on_annons(path, "from:", info->nm_from) == 1) {
         printf("%s", info->nm_from);
     }
-     if (check_string_on_annons(path, "to:", info->nm_to) == 1) {
+    free(info->nm_from);
+    if (check_string_on_annons(path, "to:", info->nm_to) == 1) {
         printf("|%s", info->nm_to);
     } else {
         printf("|");
     }
+    free(info->nm_to);
     if (check_string_on_annons(path, "date:", info->date) == 1) {
         printf("|%s", info->date);
     } else {
         printf("|");
     }
+    free(info->date);
+
     if (get_score(path, info) == 1) {
         printf("|%d\n", info->score);
     } else {
-        printf("\n"); 
+        printf("\n");
     }
+    free(info);
     return 1;
 }

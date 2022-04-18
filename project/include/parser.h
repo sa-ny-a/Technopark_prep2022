@@ -15,8 +15,6 @@ typedef struct Message {
     int score;
 } Data;
 
-
-Data* init();
 int parser(const char* path);
 
 #endif  // PROJECT_INCLUDE_PARSER_H_
