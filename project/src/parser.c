@@ -26,11 +26,14 @@ static int check_string_on_annons(const char* path, const char* control, char* b
                 }
                 if (MRK_STR_FROM == 1) {
                     if (MRK_NEWSTR_FROM != 1) {
-                        for (size_t i = strlen(control) + 1; i < strlen(str); i++) {
-                            if (*(str + i) != '\n' && *(str + i) != '\r') {
-                                back = strncat(back, &*(str + i), 1);
+                        for (size_t i = strlen(control); i < strlen(str); i++) {
+                            if (i == strlen(control) && *(str + i) == ' ') {
                             } else {
-                                break;
+                                if ((*(str + i) != '\n' && *(str + i) != '\r')) {
+                                    back = strncat(back, &*(str + i), 1);
+                                } else {
+                                    break;
+                                }
                             }
                         }
                         MRK_NEWSTR_FROM = 1;
@@ -65,24 +68,30 @@ static int get_key_in_str(const char* str, char* key) {
                 }
             }
             if (check_sum == strlen(control_sum)) {
-                for (size_t k = i + strlen(control_sum) + 1; k < strlen(str); k++) {
-                    if (*(str + k) != '"') {
-                        if (*(str + k) != '\n' && *(str + k) != '\r' && *(str + k) != ' ' && *(str + k) != ';') {
-                            key = strncat(key, &*(str + k), 1);
-                        } else {
-                            break;
+                for (size_t v = i + strlen(control_sum); v <strlen(str); v++) {
+                if (*(str + v) == '=' || *(str + v) == ' ') {
+                } else {
+                    for (size_t k = v; k < strlen(str); k++) {
+                        if (*(str + k) != '"') {
+                            if (*(str + k) != '\n' && *(str + k) != '\r' && *(str + k) != ' ' &&
+                                *(str + k) != ';') {
+                                key = strncat(key, &*(str + k), 1);
+                            } else {
+                                break;
+                            }
                         }
                     }
+                    return 1;
                 }
-                return 1;
             }
-            check_sum = 0;
         }
+        check_sum = 0;
+    }
     return 0;
 }
 
 static int get_key_in_txt(const char* path, char* key) {
-    int BUF_KEY_CONTROL = check_string_on_annons(path, "\tboundary", key);
+    int BUF_KEY_CONTROL = check_string_on_annons(path, "\tboundary=", key);
     if (BUF_KEY_CONTROL == 1) {
         char *buf = (char*)malloc(SIZE_OF_ARRAY);
         buf = strncpy(buf, "", strlen(buf));
@@ -131,7 +140,7 @@ static int get_score(const char* path, Data* dt) {
             while (!feof(email)) {
                 fgets(str, SIZE_OF_ARRAY, email);
                 if (strlen(str) > 2) {
-                    if (*(str) == '-' || *(str + 1) == '-') {
+                    if (*(str) == '-' && *(str + 1) == '-') {
                         buf = strncpy(buf, "", 1);
 
                         for (size_t i = 2; i < strlen(str); i++) {
