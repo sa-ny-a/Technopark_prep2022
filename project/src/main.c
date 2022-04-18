@@ -9,10 +9,12 @@ int main(int argc, const char **argv) {
     }
 
     const char* path_to_eml = argv[1];
-
-    if (parser(path_to_eml) != 1) {
-        printf("error\n");
-        return -1;
-    }
+    check_string_on_annons_no_back(path_to_eml, "from:");
+    printf("|");
+    check_string_on_annons_no_back(path_to_eml, "to:");
+    printf("|");
+    check_string_on_annons_no_back(path_to_eml, "date:");
+    printf("|");
+    get_score(path_to_eml);
     return 0;
 }
