@@ -1,6 +1,86 @@
 #include "../include/parser.h"
 
 
+static int check_string_on_annons_no_back(const char* path, const char* control) {
+    char *buf = (char*)calloc(SIZE_OF_ARRAY, sizeof(char));
+    FILE *ptr = fopen(path, "r");
+    if (ptr == NULL) {
+        printf("Not open: ");
+        return 0;
+    } else {
+        char str[SIZE_OF_ARRAY];
+        int MRK_FIRST_STR = 0;
+        int MRK_STR_FROM = 0;  // Это маркер контроля заголовка, равен 1 когда встретим заголовок
+        int MRK_NEWSTR_FROM = 0;  // Это маркер пробела, если сообщение более чем на 1 строку
+        while (!feof(ptr)) {
+            fgets(str, SIZE_OF_ARRAY, ptr);
+            if (strlen(str) > STR_INFO_SIZE) {
+                if (MRK_STR_FROM == 0) {  // Если заголовок не найдет
+                    size_t check_size = 0;
+                    for (size_t i = 0; i < strlen(control); i++) {
+                        if (*(str + i) == *(control + i) || *(str + i) == (*(control + i) - 32)) {
+                            check_size++;
+                        }
+                    }
+                    char *str_buf = (char*)calloc(SIZE_OF_ARRAY, sizeof(char));
+                    if (check_size == strlen(control)) {
+                        for (size_t i = strlen(control); i < strlen(str); i++) {
+                            str_buf = strncat(str_buf, &*(str + i), 1);
+                        }
+                        memcpy(str, str_buf, strlen(str));
+                        MRK_STR_FROM = 1;
+                        MRK_FIRST_STR = 1;
+                        free(str_buf);
+                    }
+                }
+                if (MRK_STR_FROM == 1) {
+                    if (MRK_NEWSTR_FROM != 1) {
+                        for (size_t i = 0; i < strlen(str); i++) {
+                            if (i == 0 && *(str) == ' ' && MRK_FIRST_STR == 1) {
+                                MRK_FIRST_STR = 0;
+                            } else {
+                                if (*(str + i) != '\n' && *(str + i) != '\r' && *(str + i) != '\0') {
+                                    if (*(str + i) == ',') {
+                                        printf("%s", buf);
+                                        buf = strncpy(buf, "", strlen(buf));
+                                    }
+                                    buf = strncat(buf, &*(str + i), 1);
+                                } else {
+                                    MRK_NEWSTR_FROM = 1;
+                                    break;
+                                }
+                            }
+                        }
+                    } else {
+                        if (*(str) == ' ') {
+                            for (size_t i = 0; i < strlen(str); i++) {
+                                if (*(str + i) != '\n' && *(str + i) != '\r' && *(str + i) != '\0') {
+                                    if (*(str + i) == ',') {
+                                        printf("%s", buf);
+                                        buf = strncpy(buf, "", strlen(buf));
+                                    }
+                                    buf = strncat(buf, &*(str + i), 1);
+                                } else {
+                                    break;
+                                }
+                            }
+                        } else {
+                            printf("%s", buf);
+                            fclose(ptr);
+                            free(buf);
+                            return 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    free(buf);
+    fclose(ptr);
+    return 0;
+}
+
+
 static int check_string_on_annons(const char* path, const char* control, char* back) {
     FILE *ptr = fopen(path, "r");
     if (ptr == NULL) {
@@ -173,18 +253,18 @@ static int get_score(const char* path, Data* dt) {
 int parser(const char* path) {
     Data* info = malloc(sizeof(Data));;
     info->nm_from = (char*)malloc(SIZE_OF_ARRAY);
-    info->nm_to = (char*)malloc(SIZE_OF_ARRAY);
+    // info->nm_to = (char*)malloc(SIZE_OF_ARRAY);
     info->date = (char*)malloc(SIZE_OF_ARRAY);
     if (check_string_on_annons(path, "from:", info->nm_from) == 1) {
-        printf("%s", info->nm_from);
-    }
-    free(info->nm_from);
-    if (check_string_on_annons(path, "to:", info->nm_to) == 1) {
-        printf("|%s", info->nm_to);
+        printf("%s|", info->nm_from);
     } else {
         printf("|");
     }
-    free(info->nm_to);
+    free(info->nm_from);
+    if (check_string_on_annons_no_back(path, "to:") == 1) {
+//        printf("|");
+    }
+    // free(info->nm_to);
     if (check_string_on_annons(path, "date:", info->date) == 1) {
         printf("|%s", info->date);
     } else {
