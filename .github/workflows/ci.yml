@@ -41,22 +41,3 @@ jobs:
         if: failure()
         with:
             path: valgrind.log
-  test_extra:
-    runs-on: ubuntu-latest
-    container: leshiy1295/gcc_linters_valgrind
-    needs: [memtest]
-    steps:
-      - uses: actions/checkout@v2
-      - run: make testextra
-  memtest_extra:
-    runs-on: ubuntu-latest
-    container: leshiy1295/gcc_linters_valgrind
-    needs: [test_extra]
-    steps:
-      - uses: actions/checkout@v2
-      - run: make memtestextra
-      - name: Upload artifacts
-        if: failure()
-        uses: actions/upload-artifact@v2
-        with:
-            path: valgrind.log
