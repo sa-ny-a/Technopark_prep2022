@@ -34,28 +34,29 @@ void check_string_on_annons_no_back(const char* path, const char* control) {
     while (!feof(ptr)) {
         fgets(str, SIZE_OF_ARRAY, ptr);
         if (strlen(str) > STR_INFO_SIZE) {
-            if (MRK_STR_FROM == ZERO_CONST) {  // Если заголовок не найдет выполняется эта часть кода
+            if (MRK_STR_FROM == ZERO_CONST) {  // Если заголовок не найден
                 if (check_str_ctl(str, control) == strlen(control)) {
-                    clear_first_str(str, control);  // Очищаем начала строки, чтобы ошибок потом не было
+                    clear_first_str(str, control);  // Очищаем начала строки
                     MRK_STR_FROM = ONE_CONST;
                     MRK_FIRST_STR = ONE_CONST;
                 }
             }
-            if (MRK_STR_FROM == ONE_CONST) {
+            if (MRK_STR_FROM == ONE_CONST) {  // Если заголовок найден
                 if (MRK_NEWSTR_FROM != ONE_CONST) {
                     for (size_t i = 0; i < strlen(str); i++) {
                         if (i == ZERO_CONST && *(str) == ' ' && MRK_FIRST_STR == 1) {
                             MRK_FIRST_STR = ZERO_CONST;
-                            }
-                        if (*(str + i) != '\n' && *(str + i) != '\r' && *(str + i) != '\0') {
-                            if (*(str + i) == ',') {
-                                printf("%s", buf);
-                                buf = strncpy(buf, "", strlen(buf));
-                            }
-                            buf = strncat(buf, &*(str + i), 1);
                         } else {
-                            MRK_NEWSTR_FROM = ONE_CONST;
-                            break;
+                            if (*(str + i) != '\n' && *(str + i) != '\r' && *(str + i) != '\0') {
+                                if (*(str + i) == ',') {
+                                    printf("%s", buf);
+                                    buf = strncpy(buf, "", strlen(buf));
+                                }
+                                buf = strncat(buf, &*(str + i), 1);
+                            } else {
+                                MRK_NEWSTR_FROM = ONE_CONST;
+                                break;
+                                }
                             }
                     }
                 } else {
