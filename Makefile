@@ -2,14 +2,17 @@ TARGET = ./main.out
 TST_TARGET = ./tests.out
 VALGRIND_LOG = "valgrind.log"
 
-# XXX: Don't forget backslash at the end of any line except the last one
 # Main
 HDRS = \
 	   project/include
 
 SRCS = \
 	   project/src/main.c \
-	   project/src/matrix.c
+	   project/src/init_operations.c \
+	   project/src/basic_operations.c \
+	   project/src/math_operations.c \
+	   project/src/extra_operations.c \
+	   project/src/add_utils.c
 
 # Test
 TST_HDRS = \
@@ -17,7 +20,11 @@ TST_HDRS = \
 		   project/tests/include
 
 TST_SRCS = \
-           project/src/matrix.c \
+           project/src/init_operations.c \
+	       project/src/basic_operations.c \
+	       project/src/math_operations.c \
+	       project/src/extra_operations.c \
+		   project/src/add_utils.c \
 		   project/tests/src/*.c
 
 .PHONY: all check build test memtest testextra memtestextra rebuild clean
