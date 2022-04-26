@@ -2,6 +2,10 @@
 
 #include <vector>
 #include <istream>
+#include <iomanip>
+#include <cmath>
+#include <limits>
+#include <stdexcept>
 
 namespace prep {
 class Matrix {
@@ -15,7 +19,7 @@ class Matrix {
     explicit Matrix(std::istream& is);
     Matrix(const Matrix& rhs)/* = default*/;
     Matrix& operator=(const Matrix& rhs)/* = default*/;
-    ~Matrix() = default;
+    ~Matrix()/* = default*/;
 
     size_t getRows() const;
     size_t getCols() const;
