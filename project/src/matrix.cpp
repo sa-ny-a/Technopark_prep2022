@@ -14,8 +14,6 @@ namespace prep {
         this->matrix = new double *[this->rows];
         for (size_t i = 0; i < this->rows; i++) {
             this->matrix[i] = new double[this->cols];
-        }
-        for (size_t i = 0; i < this->rows; i++) {
             for (size_t j = 0; j < this->cols; j++) {
                 this->matrix[i][j] = 0;
             }
@@ -30,10 +28,12 @@ namespace prep {
             this->matrix = new double *[this->rows];
             for (size_t i = 0; i < this->rows; i++) {
                 this->matrix[i] = new double[this->cols];
-            }
-            for (size_t i = 0; i < this->rows; i++) {
                 for (size_t j = 0; j < this->cols; j++) {
                     if (!(is >> matrix[i][j])) {
+                        for (size_t k = 0; k < this->rows; k++) {
+                            delete[] this->matrix[k];
+                        }
+                        delete[] this->matrix;
                         throw InvalidMatrixStream();
                     }
                 }
@@ -47,8 +47,6 @@ namespace prep {
         this->matrix = new double *[this->rows];
         for (size_t i = 0; i < this->rows; i++) {
             this->matrix[i] = new double[this->cols];
-        }
-        for (size_t i = 0; i < this->rows; i++) {
             for (size_t j = 0; j < this->cols; j++) {
                 this->matrix[i][j] = rhs.matrix[i][j];
             }
@@ -66,8 +64,6 @@ namespace prep {
             this->matrix = new double *[this->rows];
             for (size_t i = 0; i < this->rows; i++) {
                 this->matrix[i] = new double[this->cols];
-            }
-            for (size_t i = 0; i < this->rows; i++) {
                 for (size_t j = 0; j < this->cols; j++) {
                     this->matrix[i][j] = rhs.matrix[i][j];
                 }
@@ -258,11 +254,11 @@ namespace prep {
                 throw SingularMatrix();
             } else {
                 Matrix buf_mtx(this->rows, this->cols);
-                if (this->rows == 1) {
+                if (this->rows == 1 && this->cols == 1) {
                     buf_mtx.matrix[0][0] = 1;
                     return buf_mtx;
                 } else {
-                     for (size_t i = 0; i < buf_mtx.getRows(); i++) {
+                    for (size_t i = 0; i < buf_mtx.getRows(); i++) {
                         for (size_t j = 0; j < buf_mtx.getCols(); j++) {
                             double v = this->transp().minor_matrix(i, j).det();
                             buf_mtx.matrix[i][j] = sign(i + j) * v;
@@ -273,6 +269,7 @@ namespace prep {
             }
         }
     }
+
     Matrix Matrix::inv() const {
         if (this->cols != this->rows) {
             throw DimensionMismatch(*this);
@@ -286,4 +283,4 @@ namespace prep {
             }
         }
     }
-};  // namespace prep
+}  // namespace prep
