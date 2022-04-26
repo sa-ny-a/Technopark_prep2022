@@ -2,7 +2,7 @@
 #include "exceptions.h"
 
 namespace prep {
-    explicit Matrix::Matrix(size_t rows, size_t cols) {
+    Matrix::Matrix(size_t rows, size_t cols) {
         if (rows < 1 || cols < 1) {
             throw InvalidMatrixStream();
         } else {
@@ -10,24 +10,55 @@ namespace prep {
             this->cols = cols;
             this->matrix = new double *[this->rows];
             for (size_t i = 0; i < this->rows; i++) {
-                this->matrix[i] = new double [this->cols];
+                this->matrix[i] = new double[this->cols];
             }
         }
     }
 
-    explicit Matrix::Matrix(std::istream& is) {
-         if (!(is >> this->rows >> this->cols)) {
+    Matrix::Matrix(std::istream& is) {
+        size_t row, col;
+        if (!(is >> row >> col)) {
             throw InvalidMatrixStream();
         } else {
-            Matrix(this->rows, this->cols);
-            for (size_t i = 0; i < this->rows; i++) {
-                for (size_t j = 0; j < cthis->cols; j++) {
-                    if (!(is >> matrix[i][j])) {
-                        throw InvalidMatrixStream();
+            if (row < 1 || col < 1) {
+                throw InvalidMatrixStream();
+            } else {
+                this->rows = row;
+                this->cols = col;
+                this->matrix = new double *[this->rows];
+                for (size_t i = 0; i < this->rows; i++) {
+                    this->matrix[i] = new double[this->cols];
+                }
+                for (size_t i = 0; i < this->rows; i++) {
+                    for (size_t j = 0; j < this->cols; j++) {
+                        if (!(is >> matrix[i][j])) {
+                            throw InvalidMatrixStream();
+                        }
                     }
                 }
             }
         }
+    }
+
+    Matrix::Matrix(const Matrix& rhs) {
+        this->rows = rhs.getRows();
+        this->cols = rhs.getCols();
+        for (size_t i = 0; i < this->rows; i++) {
+            for (size_t j = 0; j < this->cols; j++) {
+                this->matrix[i][j] = rhs.matrix[i][j];
+            }
+        }
+    }
+
+    Matrix& Matrix::operator=(const Matrix& rhs) {
+        this->rows = rhs.getRows();
+        this->cols = rhs.getCols();
+        for (size_t i = 0; i < this->rows; i++) {
+            for (size_t j = 0; j < this->cols; j++) {
+                this->matrix[i][j] = rhs.matrix[i][j];
+            }
+        }
+        return *this;
     }
 
 //    size_t Matrix::getRows() const;
@@ -55,4 +86,4 @@ namespace prep {
 //
 //    Matrix operator*(double val, const Matrix& matrix);
 //    std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
-}
+};  // namespace prep
