@@ -2,3 +2,6 @@
 /cmake-build-*
 /.idea
 .vscode/
+/googletest/
+/cmake-3.15.2-*
+/ExternalLibs-*
