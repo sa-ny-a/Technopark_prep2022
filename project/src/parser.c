@@ -33,7 +33,7 @@ static void clear_first_str(char* str, const char* control) {
     free(str_buf);
 }
 
-int check_string_on_annons_no_back(const char* path, const char* control) {
+int check_string_on_annons_no_back(const char* path, const char* control, char* inf_out) {
     FILE *ptr = fopen(path, "r");
     if (ptr == NULL) {
         return -1;
@@ -63,7 +63,8 @@ int check_string_on_annons_no_back(const char* path, const char* control) {
                                 *(str + i) != *(enum_to_string(CARRIAGE_CONST)) &&
                                 *(str + i) != *(enum_to_string(ZERO_ENDL_CONST))) {
                                 if (*(str + i) == ',') {
-                                    printf("%s", buf);
+                                    strncat(inf_out, buf, strlen(buf));
+                                    // printf("%s", buf);
                                     buf = strncpy(buf, "", strlen(buf));
                                 }
                                 buf = strncat(buf, &*(str + i), 1);
@@ -80,7 +81,8 @@ int check_string_on_annons_no_back(const char* path, const char* control) {
                                 *(str + i) != *(enum_to_string(CARRIAGE_CONST)) &&
                                 *(str + i) != *(enum_to_string(ZERO_ENDL_CONST))) {
                                 if (*(str + i) == ',') {
-                                    printf("%s", buf);
+                                    strncat(inf_out, buf, strlen(buf));
+                                    // printf("%s", buf);
                                     buf = strncpy(buf, "", strlen(buf));
                                 }
                                 buf = strncat(buf, &*(str + i), 1);
@@ -89,10 +91,11 @@ int check_string_on_annons_no_back(const char* path, const char* control) {
                                 }
                         }
                     } else {
-                        printf("%s", buf);
+                        strncat(inf_out, buf, strlen(buf));
+                        // printf("%s", buf);
                         fclose(ptr);
                         free(buf);
-                        return 0;
+                        return ZERO_CONST;
                     }
                 }
             }
@@ -100,15 +103,14 @@ int check_string_on_annons_no_back(const char* path, const char* control) {
     }
     free(buf);
     fclose(ptr);
-    return 0;
+    return ZERO_CONST;
 }
 
 
 int check_string_on_annons(const char* path, const char* control, char* back) {
     FILE *ptr = fopen(path, "r");
     if (ptr == NULL) {
-        printf("Not open: ");
-        return ZERO_CONST;
+        return -1;
     }
     char str[SIZE_OF_ARRAY];
     int MRK_STR_FROM = ZERO_CONST;  // Маркер контроля заголовка, равен 1, когда встретим заголовок
