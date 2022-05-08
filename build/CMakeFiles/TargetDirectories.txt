@@ -1,0 +1,11 @@
+/home/sanya/Homework/build/CMakeFiles/rebuild_cache.dir
+/home/sanya/Homework/build/CMakeFiles/edit_cache.dir
+/home/sanya/Homework/build/CMakeFiles/test.dir
+/home/sanya/Homework/build/project/CMakeFiles/rebuild_cache.dir
+/home/sanya/Homework/build/project/CMakeFiles/edit_cache.dir
+/home/sanya/Homework/build/project/CMakeFiles/test.dir
+/home/sanya/Homework/build/project/CMakeFiles/prepmatrix.dir
+/home/sanya/Homework/build/project/tests/CMakeFiles/rebuild_cache.dir
+/home/sanya/Homework/build/project/tests/CMakeFiles/edit_cache.dir
+/home/sanya/Homework/build/project/tests/CMakeFiles/test.dir
+/home/sanya/Homework/build/project/tests/CMakeFiles/tests.dir
